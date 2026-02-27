@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff4d88, #ff99cc, #ffcce6);
+    height: 100vh;
+}
+
+/* ✨ GLOW ANIMATION */
+@keyframes glowPulse {
+    0%,100% { text-shadow: 0 0 10px #fff, 0 0 20px #ff66b2; }
+    50% { text-shadow: 0 0 20px #fff, 0 0 40px #ff1a75; }
+}
+
+/* 🔐 PASSWORD SCREEN */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #ff66a3, #cc0066);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 1s ease;
+}
+
+/* Glowing Title */
+#lockScreen h2 {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 30px;
+    animation: glowPulse 2s infinite ease-in-out;
+}
+
+/* Glowing Input */
+#passwordInput {
+    padding: 15px;
+    border-radius: 30px;
+    border: 2px solid white;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+    width: 250px;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+#passwordInput:focus {
+    box-shadow: 0 0 25px #fff, 0 0 40px #ff4d88;
+}
+
+/* Glowing Button */
+#enterBtn {
+    margin-top: 20px;
+    padding: 12px 35px;
+    border-radius: 30px;
+    border: none;
+    background: white;
+    color: #ff1a75;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: 0 0 15px #fff;
+}
+
+#enterBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #fff, 0 0 50px #ff66b2;
+}
+
+/* Floating Hearts Behind Lock Screen */
+.heart {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #ff99cc;
+    transform: rotate(45deg);
+    animation: float 8s linear infinite;
+    opacity: 0.5;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #ff99cc;
+    border-radius: 50%;
+}
+
+.heart::before { top: -7px; }
+.heart::after { left: -7px; }
+
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(45deg); }
+    100% { transform: translateY(-10vh) rotate(45deg); }
+}
+
+/* MAIN CONTENT */
+#mainContent {
+    display: none;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.center-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 0, 128, 0.4);
+}
+
+.center-box h1 {
+    color: white;
+    margin-bottom: 20px;
+    animation: glowPulse 2s infinite ease-in-out;
+}
+
+.center-box img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 10px;
+    animation: floatImage 4s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+@keyframes floatImage {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+audio {
+    margin-top: 20px;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="lockScreen">
+    <h2>Enter Our Secret Password 💕</h2>
+    <input type="password" id="passwordInput" placeholder="Type password...">
+    <button id="enterBtn">Unlock My Heart 💖</button>
+</div>
+
+<div id="mainContent">
+    <div class="center-box">
+        <h1>For My Beautiful ❤️</h1>
+        <img src="your-image1.jpg">
+        <img src="your-image2.jpg">
+        <audio controls>
+            <source src="voice.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+</div>
+
+<script>
+// 🔐 CHANGE PASSWORD HERE
+const correctPassword = "iloveyou123";
+
+document.getElementById("enterBtn").onclick = function() {
+    const input = document.getElementById("passwordInput").value;
+    if(input === correctPassword) {
+        document.getElementById("lockScreen").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("lockScreen").style.display = "none";
+            const main = document.getElementById("mainContent");
+            main.style.display = "block";
+            setTimeout(() => main.style.opacity = "1", 100);
+        }, 1000);
+    } else {
+        alert("Wrong password baby 🥺💔");
+    }
+};
+
+// Floating Hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 5 + 5) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
