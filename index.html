@@ -14,13 +14,26 @@ body {
     height: 100vh;
 }
 
-/* ✨ GLOW ANIMATION */
+/* 🌸 Floating Flowers */
+.flower {
+    position: absolute;
+    font-size: 20px;
+    animation: floatFlower 10s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes floatFlower {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(360deg); }
+}
+
+/* ✨ Glow Animation */
 @keyframes glowPulse {
     0%,100% { text-shadow: 0 0 10px #fff, 0 0 20px #ff66b2; }
     50% { text-shadow: 0 0 20px #fff, 0 0 40px #ff1a75; }
 }
 
-/* 🔐 PASSWORD SCREEN */
+/* Password Screen */
 #lockScreen {
     position: fixed;
     width: 100%;
@@ -34,7 +47,6 @@ body {
     transition: opacity 1s ease;
 }
 
-/* Glowing Title */
 #lockScreen h2 {
     color: white;
     font-size: 30px;
@@ -42,26 +54,17 @@ body {
     animation: glowPulse 2s infinite ease-in-out;
 }
 
-/* Glowing Input */
 #passwordInput {
     padding: 15px;
     border-radius: 30px;
     border: 2px solid white;
     background: rgba(255,255,255,0.2);
     color: white;
-    outline: none;
     font-size: 16px;
     text-align: center;
     width: 250px;
-    transition: 0.3s;
-    box-shadow: 0 0 15px rgba(255,255,255,0.5);
 }
 
-#passwordInput:focus {
-    box-shadow: 0 0 25px #fff, 0 0 40px #ff4d88;
-}
-
-/* Glowing Button */
 #enterBtn {
     margin-top: 20px;
     padding: 12px 35px;
@@ -71,50 +74,41 @@ body {
     color: #ff1a75;
     font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-    box-shadow: 0 0 15px #fff;
 }
 
-#enterBtn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px #fff, 0 0 50px #ff66b2;
-}
-
-/* Floating Hearts Behind Lock Screen */
-.heart {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: #ff99cc;
-    transform: rotate(45deg);
-    animation: float 8s linear infinite;
-    opacity: 0.5;
-}
-
-.heart::before,
-.heart::after {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: #ff99cc;
-    border-radius: 50%;
-}
-
-.heart::before { top: -7px; }
-.heart::after { left: -7px; }
-
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(45deg); }
-    100% { transform: translateY(-10vh) rotate(45deg); }
-}
-
-/* MAIN CONTENT */
+/* Main Content */
 #mainContent {
     display: none;
     opacity: 0;
     transition: opacity 2s ease;
+}
+
+/* Slideshow Container */
+.slideshow {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.6);
+    margin: auto;
+}
+
+.slideshow img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: pan 10s ease-in-out infinite;
+    transition: opacity 2s ease;
+}
+
+/* Ken Burns Effect */
+@keyframes pan {
+    0% { transform: scale(1) translate(0,0); }
+    50% { transform: scale(1.1) translate(-10px,-10px); }
+    100% { transform: scale(1) translate(0,0); }
 }
 
 .center-box {
@@ -122,33 +116,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(15px);
-    padding: 40px;
-    border-radius: 30px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(255, 0, 128, 0.4);
-}
-
-.center-box h1 {
     color: white;
-    margin-bottom: 20px;
-    animation: glowPulse 2s infinite ease-in-out;
-}
-
-.center-box img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 20px;
-    margin: 10px;
-    animation: floatImage 4s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(255,255,255,0.5);
-}
-
-@keyframes floatImage {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
 }
 
 audio {
@@ -169,8 +138,12 @@ audio {
 <div id="mainContent">
     <div class="center-box">
         <h1>For My Beautiful ❤️</h1>
-        <img src="image1.png">
-        <img src="image2.png">
+
+        <div class="slideshow">
+            <img src="image1.png" class="slide" style="opacity:1;">
+            <img src="image2.png" class="slide">
+        </div>
+
         <audio controls>
             <source src="VM.mp3" type="audio/mpeg">
         </audio>
@@ -178,7 +151,6 @@ audio {
 </div>
 
 <script>
-// 🔐 CHANGE PASSWORD HERE
 const correctPassword = "iloveyou";
 
 document.getElementById("enterBtn").onclick = function() {
@@ -196,16 +168,27 @@ document.getElementById("enterBtn").onclick = function() {
     }
 };
 
-// Floating Hearts
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 5 + 5) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 8000);
+// 🌸 Create Floating Flowers
+function createFlower() {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerHTML = "🌸";
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.animationDuration = (Math.random() * 5 + 5) + "s";
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 10000);
 }
-setInterval(createHeart, 300);
+setInterval(createFlower, 500);
+
+// 🖼 Slideshow Logic
+let slides = document.querySelectorAll(".slide");
+let current = 0;
+
+setInterval(() => {
+    slides[current].style.opacity = 0;
+    current = (current + 1) % slides.length;
+    slides[current].style.opacity = 1;
+}, 5000);
 </script>
 
 </body>
